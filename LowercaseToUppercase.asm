@@ -1,0 +1,26 @@
+.MODEL SMALL
+.STACK 100H
+.DATA
+ MSG1 DB 'Enter a lowercase letter: $'
+ MSG2 DB 0DH,0AH,'Uppercase letter is : $'
+.CODE
+MAIN PROC
+ MOV AX, @DATA
+ MOV DS, AX
+ LEA DX, MSG1
+ MOV AH, 09H
+ INT 21H
+ MOV AH, 01H ; read one character -> AL
+ INT 21H
+ SUB AL, 20H ; 'a'(61H) - 20H = 'A'(41H)
+ MOV BL, AL
+ LEA DX, MSG2
+ MOV AH, 09H
+ INT 21H
+ MOV DL, BL
+ MOV AH, 02H
+ INT 21H
+ MOV AH, 4CH
+ INT 21H
+MAIN ENDP
+END MAIN
